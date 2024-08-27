@@ -1,0 +1,2 @@
+binancekey = 'VpX6M5wOHdVA8yq2XncVVs2mnN3lSVxw2An6LsDbW4ZpbH5rSLnlHQdge0d8wLsg'
+binance_secret = 'zIXLKu6051pKP8snyPBbQOGC9hkZRPVZVSRhssSFdbRWNNeTAIc7r6cHPpAYKLLL'
