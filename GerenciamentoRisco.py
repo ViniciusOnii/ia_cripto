@@ -42,7 +42,7 @@ def posicoes_abertas(symbol):
 
     # Retorna as informações relevantes da posição.
     return lado, tamanho, preco_entrada, pos_aberta, notional, percetage, pnl
-
+#-------------------------------------------------------------------------------------------------------#
 # Função para obter o livro de ofertas (order book) de uma moeda específica.
 def livro_ofertas(symbol):
     livro_ofertas = binance.fetch_order_book(symbol)  # Busca o livro de ofertas para o símbolo especificado.
@@ -50,7 +50,7 @@ def livro_ofertas(symbol):
     ask = dc.Decimal(livro_ofertas['asks'][0][0])  # Preço de venda mais baixo.
 
     return bid, ask 
-
+#-------------------------------------------------------------------------------------------------------#
 # Função para encerrar uma posição aberta de uma moeda específica.
 def encerra_posicao(symbol):
     pos_aberta = posicoes_abertas(symbol=symbol)[3]  # Verifica se há uma posição aberta.
@@ -82,7 +82,7 @@ def encerra_posicao(symbol):
 
         # Atualiza o status da posição aberta para verificar se a posição foi encerrada.
         pos_aberta = posicoes_abertas(symbol=symbol)[3]
-
+#-------------------------------------------------------------------------------------------------------#
 def fecha_pnl(symbol, loss, target):
     percent = posicoes_abertas(symbol=symbol)[5]
     pnl = posicoes_abertas(symbol=symbol)[6]
@@ -96,7 +96,7 @@ def fecha_pnl(symbol, loss, target):
             print(f"Encerrando posição por gain! {pnl}")
             # telegram
 
-
+#-------------------------------------------------------------------------------------------------------#
 def posicoes_max(symbol, max_pos):
     pos = posicoes_abertas(symbol)[1]
     if isinstance(pos, list):
@@ -106,3 +106,28 @@ def posicoes_max(symbol, max_pos):
     else:
         max_posicao = False
     return max_posicao
+
+#-------------------------------------------------------------------------------------------------------#
+def ultima_ordem_aberta(symbol):
+    # Buscar as ordens
+    orders = binance.fetch_orders(symbol)
+    
+    # Verificar se há ordens na lista
+    if orders:
+        # Pegar o status da última ordem
+        order = orders[-1]['status']
+        
+        # Verificar se a última ordem está aberta
+        if order == 'open':
+            open_order = True
+        else:
+            open_order = False
+    else:
+        # Se não houver ordens, definir open_order como False
+        print("Nenhuma ordem encontrada para o símbolo fornecido.")
+        open_order = False
+
+    return open_order
+
+# Chamar a função com o símbolo desejado
+ultima_ordem_aberta('BTCUSDT')
