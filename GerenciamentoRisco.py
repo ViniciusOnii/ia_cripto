@@ -95,3 +95,14 @@ def fecha_pnl(symbol, loss, target):
         elif percent >= target:
             print(f"Encerrando posição por gain! {pnl}")
             # telegram
+
+
+def posicoes_max(symbol, max_pos):
+    pos = posicoes_abertas(symbol)[1]
+    if isinstance(pos, list):
+        max_posicao = False
+    elif float(pos) >= max_pos:
+        max_posicao = True
+    else:
+        max_posicao = False
+    return max_posicao
